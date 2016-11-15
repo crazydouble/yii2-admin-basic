@@ -22,12 +22,6 @@ Yii2 高级模板，后台配置
 
 ###安装
 
-#### 1. 安装Composer 不了解?点[这里](http://docs.phpcomposer.com/)
----
-
-```
-composer install
-```
 
 #### 1. 初始化
 ---
@@ -36,13 +30,33 @@ composer install
 yii init
 ```
 
+#### 2. 安装Composer 
+---
+不了解或者不会安装,点[这里](http://docs.phpcomposer.com/)
+```
+composer install
+```
+
 #### 3. 导入表结构(migration)
 ---
 
-需先修改数据库配置信息(否则会报错)
+需先修改数据库配置信息 common/config/main-local.php
 
 - 导入数据库表
 
 ```
 yii migrate 
 ```
+
+#### 4. 阿里云OSS储存
+---
+项目图片等资源不保存本地,储存在[阿里云OSS](https://www.aliyun.com/product/oss/)
+图片等资源保存本地,不使用OSS的功能正在开发中~后续会提供
+```
+修改OSS配置信息 common/config/params.php
+```
+
+#### 5. 本地开发环境
+---
+因项目设置了urlManager,需设置虚拟主机并开启重定向,否则可能会出现无法访问等情况
+如有任何问题 请发邮件到：crazydouble@sina.com
