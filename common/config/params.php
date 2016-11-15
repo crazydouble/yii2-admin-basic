@@ -14,5 +14,20 @@ return [
         'AccessKeySecret' => '', // 填写你的AccessKeySecret
         //创建的空间名
         'Bucket' => '' // 填写你创建的Bucket
-    ]
+    ],
+    'alidayu' => [
+        'appkey' => '', // 填写你的appkey
+        'secretKey' => '', // 填写你的secretKey
+        /*
+         * 根据需求添加／更改需要的短信类型
+         */
+        'signup' => [
+            'smsFreeSignName' => '注册验证',  
+            'smsTemplateCode' => 'SMS_6765804', 
+        ],
+        'update' => [
+            'smsFreeSignName' => '变更验证', 
+            'smsTemplateCode' => 'SMS_6765801', 
+        ]
+    ],
 ];

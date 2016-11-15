@@ -48,26 +48,20 @@ composer install
 yii migrate 
 ```
 
-#### 4. 阿里云OSS储存
----
-项目图片等资源不保存本地,储存在[阿里云OSS](https://www.aliyun.com/product/oss/)
-图片等资源保存本地,不使用OSS的功能正在开发中~后续会提供
-```
-修改OSS配置信息 common/config/params.php
-```
-
-#### 5. 本地开发环境
+#### 4. 本地开发环境
 ---
 因项目设置了urlManager,需设置虚拟主机并开启重定向,否则可能会出现无法访问等情况
 
 
-#### 6. 网站前台
+#### 5. 网站前台
 ---
-目前只开发了登陆注册功能,可根据自己的需求进行二次开发
-- 手机注册功能使用阿里大鱼的短信接收
-- QQ、微信、微博授权登陆
-```
-修改配置信息 common/config/params.php
-```
+目前只开发了注册／登录功能,可根据自己的需求进行二次开发
+
+
+#### 6. 第三方功能配置
+---
+- [阿里大鱼](http://www.alidayu.com/) 短信平台 (配置文件:common/config/params.php)
+- QQ、微信、微博第三方登录 (配置文件:frontend/config/main.php -> authClientCollection)
+- [阿里云OSS](https://www.aliyun.com/product/oss/) (配置文件:common/config/params.php -> oss)
 
 #### 7. 如有任何问题 请发邮件到：crazydouble@sina.com
