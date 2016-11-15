@@ -1,39 +1,36 @@
-<?php
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
-use yii\helpers\Html;
+<?php 
 use yii\bootstrap\ActiveForm;
-
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+use yii\helpers\Html;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div style="color:#999;margin:1em 0">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                </div>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
+<div class="contl">
+    <?php $form = ActiveForm::begin(); ?>
+    <ul class="w-user w-user-2">
+      <li class="w0">
+        <div class="inpt">
+          <?= $form->field($model, 'phone_number')->textInput(['maxlength' => true, 'class'=>'txt', 'placeholder'=>'手机号'])->label(false) ?> 
         </div>
-    </div>
+      </li>
+      <li class="w0">
+        <div class="inpt">
+          <?= $form->field($model, 'password_hash')->passwordInput(['maxlength' => true, 'class'=>'txt', 'placeholder'=>'请输入密码'])->label(false) ?>
+        </div>
+      </li>
+      <li class="w0 w2">
+        <?php echo Html::submitButton(Yii::t('frontend', 'Login'), ['class'=>'w-btn w-btn-0']) ?>
+      </li>
+      <li class="w0 w3 f-cb">
+        <span class="chkbox" style="font-size:12px;">
+          <span class="c j-ok">
+            <input id="c0" type="checkbox">
+          </span>
+          <a class="ztag" tabindex="3" href="javascript:void(0);">
+            <?= Yii::t('frontend', 'Remember Me') ?>
+          </a>
+        </span>
+        <!--
+        <?= Html::a(Yii::t('frontend', 'Reset Password'), Yii::$app->urlManager->createUrl(['site/reset-password']), ['class' => 'fgt']) ?>
+        -->
+      </li>
+    </ul>
+  <?php ActiveForm::end(); ?>
 </div>
