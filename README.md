@@ -6,7 +6,7 @@ Yii2 高级模板，后台配置
 [http://weibo.com/CraZyDoubLe](http://weibo.com/CraZyDoubLe)
 
 ### 简介
-后台基于Yii2框架开发,拥有登录,用户管理,管理员管理,RBAC,操作日志等公用功能.功能正在不断完善中~
+后台基于Yii2框架开发,拥有登录,用户管理,管理员管理,操作日志等通用功能.功能正在不断完善中~
 
 ### 功能
 
@@ -27,12 +27,12 @@ Yii2 高级模板，后台配置
 ---
 
 ```
-yii init
+./init
 ```
 
 #### 2. 安装Composer 
 ---
-不了解或者不会安装,点[这里](http://docs.phpcomposer.com/)
+不会用Composer,点[这里](http://docs.phpcomposer.com/)
 ```
 composer install
 ```
@@ -40,7 +40,7 @@ composer install
 #### 3. 导入表结构(migration)
 ---
 
-需先修改数据库配置信息 common/config/main-local.php
+需先修改数据库配置信息(common/config/main-local.php -> db)
 
 - 导入数据库表
 
@@ -48,11 +48,17 @@ composer install
 yii migrate 
 ```
 
-#### 4. 本地开发环境
+#### 4. 重定向
 ---
 因项目设置了urlManager,需设置虚拟主机并开启重定向,否则可能会出现无法访问等情况
-
-
+```
+RewriteEngine on
+# If a directory or a file exists, use the request directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# Otherwise forward the request to index.php
+RewriteRule . index.php
+```
 #### 5. 网站前台
 ---
 目前只开发了注册／登录功能,可根据自己的需求进行二次开发
@@ -60,8 +66,11 @@ yii migrate
 
 #### 6. 第三方功能配置
 ---
-- [阿里大鱼](http://www.alidayu.com/) 短信平台 (配置文件:common/config/params.php)
-- QQ、微信、微博第三方登录 (配置文件:frontend/config/main.php -> authClientCollection)
+- [阿里大鱼](http://www.alidayu.com/) 短信平台 (配置文件:common/config/params.php -> alidayu)
+- [QQ](https://connect.qq.com/) 
+  [微信](https://open.weixin.qq.com/) 
+  [微博](http://open.weibo.com/) 第三方登录 
+  (配置文件:frontend/config/main.php -> authClientCollection)
 - [阿里云OSS](https://www.aliyun.com/product/oss/) (配置文件:common/config/params.php -> oss)
 
 #### 7. 如有任何问题 请发邮件到：crazydouble@sina.com
