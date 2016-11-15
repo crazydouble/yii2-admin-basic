@@ -9,22 +9,10 @@ return [
         //服务器内网地址，深圳为 http://oss-cn-shenzhen-internal.aliyuncs.com
         'ossServerInternal' => 'http://oss-cn-beijing-internal.aliyuncs.com',
         //阿里云给的AccessKeyId
-        'AccessKeyId' => 'cUKNS5vHWVIQIRHv',
+        'AccessKeyId' => '', // 填写你的AccessKeyId
         //阿里云给的AccessKeySecret
-        'AccessKeySecret' => 'N2iN4dsKJnpZlO4lgNfll505TD77jI',
+        'AccessKeySecret' => '', // 填写你的AccessKeySecret
         //创建的空间名
-        'Bucket' => 'raoshezhe' // 需根据项目修改
-    ],
-    'alidayu' => [
-        'appkey' => '23339662',
-        'secretKey' => 'c14330ff4060f164cf6e356042496e84',
-        'signup' => [
-            'smsFreeSignName' => '注册验证',
-            'smsTemplateCode' => 'SMS_6765804',
-        ],
-        'update' => [
-            'smsFreeSignName' => '变更验证',
-            'smsTemplateCode' => 'SMS_6765801',
-        ]
-    ],
+        'Bucket' => '' // 填写你创建的Bucket
+    ]
 ];

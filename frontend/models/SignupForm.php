@@ -1,9 +1,8 @@
 <?php
 namespace frontend\models;
 
-use common\models\User;
 use yii\base\Model;
-use Yii;
+use common\models\User;
 
 /**
  * Signup form
@@ -13,6 +12,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+
 
     /**
      * @inheritdoc

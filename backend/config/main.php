@@ -10,7 +10,7 @@ return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'name' => '饶舌者 - 后台管理系统', // 需根据项目修改
+    'name' => '后台管理系统', // 需根据项目修改
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [

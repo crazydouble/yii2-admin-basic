@@ -1,10 +1,9 @@
 <?php
 namespace frontend\models;
 
-use common\models\User;
-use Yii;
 use yii\base\Model;
-
+use yii\base\InvalidParamException;
+use common\models\User;
 
 /**
  * Password reset form
@@ -12,61 +11,41 @@ use yii\base\Model;
 class ResetPasswordForm extends Model
 {
     public $password;
-    public $password_hash;
-    public $verify_password;
 
+    /**
+     * @var \common\models\User
+     */
     private $_user;
 
+
+    /**
+     * Creates a form model given a token.
+     *
+     * @param string $token
+     * @param array $config name-value pairs that will be used to initialize the object properties
+     * @throws \yii\base\InvalidParamException if token is empty or not valid
+     */
+    public function __construct($token, $config = [])
+    {
+        if (empty($token) || !is_string($token)) {
+            throw new InvalidParamException('Password reset token cannot be blank.');
+        }
+        $this->_user = User::findByPasswordResetToken($token);
+        if (!$this->_user) {
+            throw new InvalidParamException('Wrong password reset token.');
+        }
+        parent::__construct($config);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            //修改密码
-            [['password', 'password_hash', 'verify_password'], 'required'],
-            [['password', 'password_hash', 'verify_password'],'string', 'min' => 6],
-            ['password', 'validatePassword'],
-            ['password_hash', 'compare', 'compareAttribute' => 'password', 'operator' => '!=', 'message' => '新密码不能与原密码相同'],
-            ['verify_password', 'compare', 'compareAttribute' => 'password_hash', 'message' => '两次输入的新密码必须一致'],
+            ['password', 'required'],
+            ['password', 'string', 'min' => 6],
         ];
-    }
-
-    public function attributeLabels()
-    {
-        return [
-            'password' => '原密码',
-            'password_hash' => '新密码',
-            'verify_password' => '确认新密码'
-        ];
-    }
-
-    /**
-     * 验证密码
-     *
-     * @param string $attribute 目前验证的属性
-     * @param array $params 额外的名称-值对给定的规则
-     */
-    public function validatePassword($attribute, $params)
-    {
-        if (!$this->hasErrors()) {
-            $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, '原密码不正确');
-            }
-        }
-    }
-
-    /**
-     * 查询用户
-     *
-     * @return User|null
-     */
-    protected function getUser()
-    {
-        if ($this->_user === null) {
-            $uid = Yii::$app->user->identity->id;
-            $this->_user = User::findOne($uid);
-        }
-
-        return $this->_user;
     }
 
     /**
@@ -76,10 +55,10 @@ class ResetPasswordForm extends Model
      */
     public function resetPassword()
     {
-        if ($this->validate()) {
-            $user = $this->_user;
-            $user->password_hash = $this->password_hash;
-            return $user->save();
-        }
+        $user = $this->_user;
+        $user->setPassword($this->password);
+        $user->removePasswordResetToken();
+
+        return $user->save(false);
     }
 }

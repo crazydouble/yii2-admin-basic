@@ -1,6 +1,27 @@
-<?php 
+<?php
+
+/* @var $this yii\web\View */
+/* @var $name string */
+/* @var $message string */
+/* @var $exception Exception */
+
 use yii\helpers\Html;
-Yii::$app->layout = false; 
+
+$this->title = $name;
 ?>
-<title><?= Html::encode(Yii::$app->name) ?></title>
-<script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8" homePageUrl="<?= Yii::$app->homeUrl ?>" homePageName="返回首页"></script>
+<div class="site-error">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <div class="alert alert-danger">
+        <?= nl2br(Html::encode($message)) ?>
+    </div>
+
+    <p>
+        The above error occurred while the Web server was processing your request.
+    </p>
+    <p>
+        Please contact us if you think this is a server error. Thank you.
+    </p>
+
+</div>

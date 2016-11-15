@@ -2,46 +2,71 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\LoginForm;
-use common\models\User;
+use yii\base\InvalidParamException;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
+use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\LoginForm;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResetPasswordForm;
+use frontend\models\SignupForm;
+use frontend\models\ContactForm;
 
+/**
+ * Site controller
+ */
 class SiteController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'auth', 'send-phone-verify-code', 'reset-password', 'login', 'error'],
+                        'actions' => ['signup'],
                         'allow' => true,
+                        'roles' => ['?'],
                     ],
                     [
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
-            ]
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function actions()
     {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'auth' => [
-                'class' => 'yii\authclient\AuthAction',
-                'successCallback' => [$this, 'successCallback'],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }
 
     /**
-     * 显示首页
+     * Displays homepage.
      *
      * @return mixed
      */
@@ -51,87 +76,16 @@ class SiteController extends Controller
     }
 
     /**
-     * 注册用户
-     *
-     * @return mixed
-     */
-    public function actionSignup()
-    {
-        $this->layout = 'site';
-        $model = new User(['scenario' => 'alidayu']);
-        if ($model->load(Yii::$app->request->post())) {
-            if($user = $model->signup()){
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            } 
-        }
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Oauth 成功回调
-     * @param QqAuth|WeiboAuth $client
-     * @see http://wiki.connect.qq.com/get_user_info
-     * @see http://stuff.cebe.cc/yii2docs/yii-authclient-authaction.html
-     */
-    public function successCallback($client) {
-        // qq | sina | weixin
-        $id = $client->getId(); 
-        // basic info
-        //$attributes = $client->getUserAttributes(); 
-        //user openid
-        $openid = $client->getOpenid(); 
-        // user extend info
-        $userInfo = $client->getUserInfo(); 
-        $user = User::findByOpenId($openid);
-        if ($user) {
-            if ($user->status = User::STATUS_ACTIVE) {
-                if(Yii::$app->user->login($user)){
-                    return $this->goHome();
-                }
-            }
-        }else{
-            $model = new User(['scenario' => 'oauth']);
-            if ($user = $model->oauthSignup($id, $openid, $userInfo)) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            } 
-        }
-        return $this->redirect(['login']); 
-    }
-
-    /**
-     * 发送手机验证码
-     */
-    public function actionSendPhoneVerifyCode($phone_number, $code, $type = 'signup'){
-        $c = new \TopClient();
-        $c->appkey = Yii::$app->params['alidayu']['appkey'];
-        $c->secretKey = Yii::$app->params['alidayu']['secretKey'];
-        $req = new \AlibabaAliqinFcSmsNumSendRequest();
-        $req->setExtend($code);
-        $req->setSmsType("normal");
-        $req->setSmsFreeSignName(Yii::$app->params['alidayu'][$type]['smsFreeSignName']);
-        $req->setSmsParam("{\"code\":\"$code\",\"product\":\"饶舌者Rappers\"}");
-        $req->setRecNum($phone_number);
-        $req->setSmsTemplateCode(Yii::$app->params['alidayu'][$type]['smsTemplateCode']);
-        $c->execute($req);
-    }
-    
-    /**
-     * 登录用户
+     * Logs in a user.
      *
      * @return mixed
      */
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $this->layout = 'site';
+
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
@@ -143,14 +97,117 @@ class SiteController extends Controller
     }
 
     /**
-     * 注销当前用户
+     * Logs out the current user.
      *
      * @return mixed
      */
     public function actionLogout()
     {
-        Yii::$app->user->logout(false);
+        Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    /**
+     * Displays contact page.
+     *
+     * @return mixed
+     */
+    public function actionContact()
+    {
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+            } else {
+                Yii::$app->session->setFlash('error', 'There was an error sending email.');
+            }
+
+            return $this->refresh();
+        } else {
+            return $this->render('contact', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Displays about page.
+     *
+     * @return mixed
+     */
+    public function actionAbout()
+    {
+        return $this->render('about');
+    }
+
+    /**
+     * Signs user up.
+     *
+     * @return mixed
+     */
+    public function actionSignup()
+    {
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Requests password reset.
+     *
+     * @return mixed
+     */
+    public function actionRequestPasswordReset()
+    {
+        $model = new PasswordResetRequestForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+            }
+        }
+
+        return $this->render('requestPasswordResetToken', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Resets password.
+     *
+     * @param string $token
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function actionResetPassword($token)
+    {
+        try {
+            $model = new ResetPasswordForm($token);
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+            Yii::$app->session->setFlash('success', 'New password was saved.');
+
+            return $this->goHome();
+        }
+
+        return $this->render('resetPassword', [
+            'model' => $model,
+        ]);
     }
 }
