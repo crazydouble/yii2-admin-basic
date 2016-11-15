@@ -68,9 +68,9 @@ class AdminLog extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'admin_id' => Yii::t('app', '管理员ID'),
-            'admin_ip' => Yii::t('app', '管理员IP'),
-            'admin_agent' => Yii::t('app', '管理员浏览器'),
+            'admin_id' => Yii::t('app', '管理员'),
+            'admin_ip' => Yii::t('app', 'IP'),
+            'admin_agent' => Yii::t('app', '浏览器'),
             'controller' => Yii::t('app', '控制器'),
             'action' => Yii::t('app', '动作'),
             'details' => Yii::t('app', '详情'),

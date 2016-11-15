@@ -43,7 +43,7 @@ use common\models\Format;
 
                             'id',
                             [
-                                'label' => '管理员昵称',
+                                'label' => '昵称',
                                 'attribute' => 'admin_name',
                                 'value' => 'admins.nickname',
                                 

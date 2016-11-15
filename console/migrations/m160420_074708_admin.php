@@ -30,7 +30,7 @@ class m160420_074708_admin extends Migration
         //创建管理员表
         $this->createTable(self::TBL_NAME, [
             'id' => $this->primaryKey()->unsigned()->comment('ID'),  
-            'username' => $this->string(32)->notNull()->unique()->comment('管理员账号'),
+            'username' => $this->string(32)->notNull()->unique()->comment('账号'),
             'nickname' => $this->string(32)->notNull()->unique()->comment('昵称'),
             'email' => $this->string(32)->notNull()->unique()->comment('邮箱'),
             'auth_key' => $this->string(32)->notNull()->comment('认证密钥'),

@@ -31,7 +31,7 @@ class m160523_080606_city extends Migration
         $this->createTable(self::TBL_NAME, [
             'id' => $this->primaryKey()->unsigned()->comment('ID'),  
             'pid' => $this->smallInteger()->notNull()->comment('父ID'),
-            'name' => $this->string(20)->notNull()->comment('名称'),
+            'name' => $this->string(20)->notNull()->comment('所在地'),
             
             'created_at' => $this->integer()->notNull()->comment('创建时间'),
             'updated_at' => $this->integer()->notNull()->comment('更新时间'),

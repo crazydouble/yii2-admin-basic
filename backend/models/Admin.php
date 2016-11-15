@@ -86,7 +86,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', '管理员账号'),
+            'username' => Yii::t('app', '账号'),
             'nickname' => Yii::t('app', '昵称'),
             'email' => Yii::t('app', '邮箱'),
             'auth_key' => Yii::t('app', '认证密钥'),

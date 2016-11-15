@@ -30,9 +30,9 @@ class m160722_071858_admin_log extends Migration
         //创建管理员日志
         $this->createTable(self::TBL_NAME, [
             'id' => $this->primaryKey()->unsigned()->comment('ID'),
-            'admin_id' => $this->integer()->notNull()->comment('管理员ID'),
-            'admin_ip' => $this->string(200)->notNull()->comment('管理员IP'),
-            'admin_agent' => $this->string(200)->notNull()->comment('管理员浏览器'),
+            'admin_id' => $this->integer()->notNull()->comment('管理员'),
+            'admin_ip' => $this->string(200)->notNull()->comment('IP'),
+            'admin_agent' => $this->string(200)->notNull()->comment('浏览器'),
             'controller' => $this->string(200)->notNull()->comment('控制器'),
             'action' => $this->string(200)->notNull()->comment('动作'),
             'details' => $this->text()->comment('详情'),

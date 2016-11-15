@@ -51,7 +51,7 @@ class City extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'pid' => Yii::t('app', '父ID'),
-            'name' => Yii::t('app', '名称'),
+            'name' => Yii::t('app', '所在地'),
             'created_at' => Yii::t('app', '创建时间'),
             'updated_at' => Yii::t('app', '更新时间'),
             'status' => Yii::t('app', '状态'),

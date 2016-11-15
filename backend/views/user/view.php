@@ -56,8 +56,14 @@ use components\Oss;
                         'attribute' => 'gender',
                         'value' => User::getValues('gender',$model->gender)
                     ],
-                    'provinces.name',
-                    'citys.name',
+                    [
+                        'label' => '省',
+                        'attribute' => 'provinces.name'
+                    ],
+                    [
+                        'label' => '市',
+                        'attribute' => 'citys.name'
+                    ],
                     [
                         'attribute' => 'avatar',
                         'format' => 'raw',

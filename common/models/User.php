@@ -385,7 +385,7 @@ class User extends ActiveRecord implements IdentityInterface
             'source' => [
                 self::SOURCE_PHONE => Yii::t('common', 'Phone'),
                 self::SOURCE_QQ => Yii::t('common', 'Qq'),
-                self::SOURCE_WEIXIN => Yii::t('common', 'Wexin'),
+                self::SOURCE_WEIXIN => Yii::t('common', 'Weixin'),
                 self::SOURCE_WEIBO => Yii::t('common', 'Weibo'),
             ],
             'status' => [
