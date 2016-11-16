@@ -60,11 +60,15 @@ AppAsset::register($this);
             </ul>
             <!-- /页面刷新 -->
             <!-- 搜索 -->
+            <?php
+            /*
             <div class="search" id="main-search">
               <i class="fa fa-search">
               </i>
               <input type="text" placeholder="搜索您需要的内容..." />
             </div>
+            */
+            ?>
             <!-- /搜索 -->
             <!-- 快捷操作 -->
             <ul class="nav navbar-nav quick-actions">
@@ -112,6 +116,8 @@ AppAsset::register($this);
                     </li>
                     <li class="divider">
                     </li>
+                    <?php
+                    /*
                     <li>
                       <?= Html::a('<i class="fa fa-user"></i> 个人资料', 'javascript:void(0);') ?>
                     </li>
@@ -128,6 +134,8 @@ AppAsset::register($this);
                     </li>
                     <li class="divider">
                     </li>
+                    */
+                    ?>
                     <li>
                       <?= Html::a('<i class="fa fa-power-off"></i>'.Yii::t('backend', 'Logout'),Yii::$app->urlManager->createUrl(['site/logout'])) ?>
                     </li>
