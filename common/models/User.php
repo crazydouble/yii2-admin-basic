@@ -389,8 +389,8 @@ class User extends ActiveRecord implements IdentityInterface
                 self::SOURCE_WEIBO => Yii::t('common', 'Weibo'),
             ],
             'status' => [
-                self::STATUS_DELETED => Yii::t('common', 'Deleted'),
                 self::STATUS_ACTIVE => Yii::t('common', 'Active'),
+                self::STATUS_DELETED => Yii::t('common', 'Deleted'),
             ]
         ];
 

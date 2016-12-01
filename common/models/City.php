@@ -68,8 +68,8 @@ class City extends ActiveRecord
     {
         $values = [
             'status' => [
-                self::STATUS_DELETED => Yii::t('common', 'Deleted'),
                 self::STATUS_ACTIVE => Yii::t('common', 'Active'),
+                self::STATUS_DELETED => Yii::t('common', 'Deleted'),
             ]
         ];
 
