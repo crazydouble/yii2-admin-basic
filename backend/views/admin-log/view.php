@@ -12,7 +12,7 @@ use backend\models\AdminLog;
     <h2>
       <i class="fa fa-file-o" style="line-height: 48px;padding-left: 1px;">
       </i>
-      <?= Yii::t('backend', 'View AdminLog') ?>
+      <?= Yii::t('backend', 'View Log') ?>
     </h2>
     <div class="breadcrumbs">
       <ol class="breadcrumb">
@@ -26,10 +26,10 @@ use backend\models\AdminLog;
           <?= Yii::t('backend', 'System Management') ?>
         </li>
         <li class="active">
-          <?= Html::a(Yii::t('backend', 'AdminLog'), ['index']) ?>
+          <?= Html::a(Yii::t('backend', 'AdminLogs'), ['index']) ?>
         </li> 
         <li class="active">
-          <?= Yii::t('backend', 'View AdminLog') ?>
+          <?= Yii::t('backend', 'View Log') ?>
         </li>
       </ol>
     </div>

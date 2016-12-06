@@ -212,8 +212,8 @@ AppAsset::register($this);
                       </li>
                       <li>
                         <?= Html::a(
-                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'Logs'),
-                          Yii::$app->urlManager->createUrl(['log'])
+                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'AdminLogs'),
+                          Yii::$app->urlManager->createUrl(['admin-log'])
                         ) ?>
                       </li>
                     </ul>

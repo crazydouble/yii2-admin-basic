@@ -31,6 +31,6 @@ return [
     'Create Role' => '创建角色',
     'Update Role' => '更新角色',
     'View Role' => '查看角色',
-    'Logs' => '操作日志',
+    'AdminLogs' => '操作日志',
     'View Log' => '查看日志',
 ];

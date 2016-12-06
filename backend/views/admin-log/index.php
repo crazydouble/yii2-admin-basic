@@ -13,7 +13,7 @@ use common\models\Format;
 ?>
 <div id="content" class="col-md-12">
     <div class="pageheader"> 
-        <h2><i class="fa fa-file-o"></i> <?= Yii::t('backend', 'AdminLog') ?> </h2> 
+        <h2><i class="fa fa-file-o"></i> <?= Yii::t('backend', 'AdminLogs') ?> </h2> 
         <div class="breadcrumbs"> 
             <ol class="breadcrumb"> 
                 <li>当前位置</li>
@@ -24,7 +24,7 @@ use common\models\Format;
                   <?= Yii::t('backend', 'System Management') ?>
                 </li>
                 <li class="active">
-                    <?= Html::a(Yii::t('backend', 'AdminLog'), ['index']) ?>
+                    <?= Html::a(Yii::t('backend', 'AdminLogs'), ['index']) ?>
                 </li>
             </ol>
         </div> 
