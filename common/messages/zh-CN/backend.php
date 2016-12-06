@@ -10,7 +10,7 @@ return [
     'Forgot Password' => '忘记密码',
     'Contact Admin' => '联系管理员',
 
-    'Dashboard' => '仪表盘',
+    'Index' => '首页',
 
     'User Management' => '用户管理',
     'Users' => '用户列表',

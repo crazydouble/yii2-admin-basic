@@ -166,7 +166,7 @@ AppAsset::register($this);
                 <ul class="menu">
                   <li class="active">
                     <?= Html::a(
-                      '<i class="fa fa-tachometer"></i> '.Yii::t('backend', 'Dashboard')/*.'<span class="badge badge-red">1</span>'*/,
+                      '<i class="fa fa-tachometer"></i> '.Yii::t('backend', 'Index')/*.'<span class="badge badge-red">1</span>'*/,
                       Yii::$app->homeUrl
                     ) ?>
                   </li>

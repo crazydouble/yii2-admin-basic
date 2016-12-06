@@ -5,12 +5,12 @@ use yii\helpers\Html;
 ?>
 <div id="content" class="col-md-12"> 
  <div class="pageheader"> 
-  <h2><i class="fa fa-tachometer"></i> <?= Yii::t('backend', 'Dashboard') ?> </h2> 
+  <h2><i class="fa fa-tachometer"></i> <?= Yii::t('backend', 'Index') ?> </h2> 
   <div class="breadcrumbs"> 
    <ol class="breadcrumb"> 
     <li>当前位置</li> 
     <li><?= Html::a(Html::encode(Yii::$app->name), Yii::$app->homeUrl) ?></li>  
-    <li class="active"><?= Yii::t('backend', 'Dashboard') ?></li> 
+    <li class="active"><?= Yii::t('backend', 'Index') ?></li> 
    </ol> 
   </div> 
  </div> 
