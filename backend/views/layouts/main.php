@@ -200,8 +200,20 @@ AppAsset::register($this);
                       </li>
                       <li>
                         <?= Html::a(
-                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'AdminLog'),
-                          Yii::$app->urlManager->createUrl(['admin-log'])
+                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'Permissions'),
+                          Yii::$app->urlManager->createUrl(['permission'])
+                        ) ?>
+                      </li>
+                      <li>
+                        <?= Html::a(
+                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'Roles'),
+                          Yii::$app->urlManager->createUrl(['role'])
+                        ) ?>
+                      </li>
+                      <li>
+                        <?= Html::a(
+                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'Logs'),
+                          Yii::$app->urlManager->createUrl(['log'])
                         ) ?>
                       </li>
                     </ul>
