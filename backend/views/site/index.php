@@ -9,7 +9,7 @@ use yii\helpers\Html;
   <div class="breadcrumbs"> 
    <ol class="breadcrumb"> 
     <li>当前位置</li> 
-    <li><?= Html::a(Html::encode(Yii::$app->name), Yii::$app->homeUrl) ?></li>  
+    <li><?= Html::a(Html::encode(Yii::$app->name), Yii::$app->homeUrl) ?></li>
     <li class="active"><?= Yii::t('backend', 'Index') ?></li> 
    </ol> 
   </div> 

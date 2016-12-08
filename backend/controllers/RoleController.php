@@ -107,9 +107,10 @@ class RoleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        if($model->updateStatus()){
+            return $this->redirect(['index']);
+        }
     }
 
     /**
@@ -133,7 +134,6 @@ class RoleController extends Controller
         foreach ($permissions as $permission) {
             $res[] = $permission->name;
         }
-        
         return $res;
     }
 

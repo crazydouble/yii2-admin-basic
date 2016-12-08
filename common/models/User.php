@@ -397,6 +397,14 @@ class User extends ActiveRecord implements IdentityInterface
         return $value !== false ? ArrayHelper::getValue($values[$field], $value) : $values[$field];
     }
 
+    public function updateStatus(){
+        $this->status = ($this->status == self::STATUS_ACTIVE) ? self::STATUS_DELETED : self::STATUS_ACTIVE;
+        if($this->save()){
+            return true;
+        }
+        return false;
+    }
+    
     //手机验证码验证
     public function getPhoneCodeRecord($attribute)
     {
