@@ -95,12 +95,16 @@ class User extends ActiveRecord implements IdentityInterface
                     $this->nickname = $this->phone_number;
                 }
             }
-            
-            \backend\models\AdminLog::saveLog($this);
-
             return true;
         }
         return false;
+    }
+    
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        \backend\models\AdminLog::saveLog($this);
+        return true; 
     }
     
     public function rules()

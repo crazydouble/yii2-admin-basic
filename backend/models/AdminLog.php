@@ -17,6 +17,7 @@ use backend\models\Admin;
  * @property string $admin_agent
  * @property string $controller
  * @property string $action
+ * @property integer $tid
  * @property string $details
  * @property integer $created_at
  * @property integer $updated_at
@@ -50,12 +51,12 @@ class AdminLog extends ActiveRecord
     {
         return [
             //特殊需求
-            [['admin_id', 'admin_ip', 'admin_agent', 'controller', 'action', 'created_at', 'updated_at'], 'required'],
+            [['admin_id', 'admin_ip', 'admin_agent', 'controller', 'action', 'tid', 'created_at', 'updated_at'], 'required'],
             //字段规范
             ['status', 'default', 'value' => self::STATUS_ACTIVE], 
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             //字段类型
-            [['admin_id', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['admin_id', 'tid', 'created_at', 'updated_at', 'status'], 'integer'],
             [['details'], 'string'],
             [['admin_ip', 'admin_agent', 'controller', 'action'], 'string', 'max' => 200],
         ];
@@ -73,6 +74,7 @@ class AdminLog extends ActiveRecord
             'admin_agent' => Yii::t('app', '浏览器'),
             'controller' => Yii::t('app', '控制器'),
             'action' => Yii::t('app', '动作'),
+            'tid' => Yii::t('app', '表ID'),
             'details' => Yii::t('app', '详情'),
             'created_at' => Yii::t('app', '创建时间'),
             'updated_at' => Yii::t('app', '更新时间'),
@@ -93,13 +95,10 @@ class AdminLog extends ActiveRecord
 
             $log->controller = Yii::$app->controller->id;
             $log->action = Yii::$app->controller->action->id;
-            $diff = array_diff_assoc($model->attributes, $model->oldAttributes);
-            if($diff){
-                $details = '';
-                foreach ($diff as $key => $value) {
-                    $details .= $key .' : '. $value . "\r\n";
-                }
-                $log->details = $details;
+            $log->tid = $model->attributes['id'];
+
+            foreach ($model->attributes as $key => $value) {
+                $log->details .= $key .' : '. $value . "\r\n";
             }
             $log->save(false);
         }

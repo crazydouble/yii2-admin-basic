@@ -35,6 +35,7 @@ class m160722_071858_admin_log extends Migration
             'admin_agent' => $this->string(200)->notNull()->comment('浏览器'),
             'controller' => $this->string(200)->notNull()->comment('控制器'),
             'action' => $this->string(200)->notNull()->comment('动作'),
+            'tid' => $this->integer()->notNull()->comment('表ID'),
             'details' => $this->text()->comment('详情'),
 
             'created_at' => $this->integer()->notNull()->comment('创建时间'),

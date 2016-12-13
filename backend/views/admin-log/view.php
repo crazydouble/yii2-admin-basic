@@ -51,6 +51,7 @@ use backend\models\AdminLog;
                     'admin_agent',
                     'controller',
                     'action',
+                    'tid',
                     'details:ntext',
                     'created_at:datetime',
                     'updated_at:datetime',

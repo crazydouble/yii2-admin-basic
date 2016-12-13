@@ -57,6 +57,7 @@ use common\models\Format;
                             ],
                             'controller',
                             'action',
+                            'tid',
                             /*
                             [
                                'attribute' => 'details',  

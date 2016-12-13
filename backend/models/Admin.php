@@ -52,12 +52,16 @@ class Admin extends ActiveRecord implements IdentityInterface
                     $this->setPassword($this->password_hash);
                 }
             }
-            
-            \backend\models\AdminLog::saveLog($this);
-
             return true;
         }
         return false;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        \backend\models\AdminLog::saveLog($this);
+        return true; 
     }
 
     public function rules()
