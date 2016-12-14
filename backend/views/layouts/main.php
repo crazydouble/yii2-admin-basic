@@ -2,6 +2,8 @@
 
 use backend\assets\AppAsset; 
 use yii\helpers\Html; 
+use backend\models\Menu;
+
 AppAsset::register($this); 
 
 ?>
@@ -16,10 +18,7 @@ AppAsset::register($this);
     <title><?= Html::encode(Yii::$app->name) ?></title>
     <?php $this->head() ?>
     <style type="text/css">
-      div.required label:after {
-          content: " *";
-          color: red;
-      }
+      div.required label:after {content: " *"; color: red;}
     </style>
   </head>
   
@@ -163,101 +162,7 @@ AppAsset::register($this);
                   'javascript:void(0);',
                   ['class' => 'sidebar-toggle', 'data-toggle' => '#navigation']
                 )?>
-                <ul class="menu">
-                  <li class="active">
-                    <?= Html::a(
-                      '<i class="fa fa-tachometer"></i> '.Yii::t('backend', 'Index')/*.'<span class="badge badge-red">1</span>'*/,
-                      Yii::$app->homeUrl
-                    ) ?>
-                  </li>
-                  <li class="dropdown">
-                    <?= Html::a(
-                      '<i class="fa fa-user"></i> '.Yii::t('backend', 'User Management').'<b class="fa fa-plus dropdown-plus"></b>',
-                      'javascript:void(0);',
-                      ['class' => 'dropdown-toggle', 'data-toggle' => 'dropdown']
-                    ) ?>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <?= Html::a(
-                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'Users'),
-                          Yii::$app->urlManager->createUrl(['user'])
-                        ) ?>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <?= Html::a(
-                      '<i class="fa fa-cog"></i> '.Yii::t('backend', 'System Management').'<b class="fa fa-plus dropdown-plus"></b>',
-                      'javascript:void(0);',
-                      ['class' => 'dropdown-toggle', 'data-toggle' => 'dropdown']
-                    ) ?>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <?= Html::a(
-                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'Admins'),
-                          Yii::$app->urlManager->createUrl(['admin'])
-                        ) ?>
-                      </li>
-                      <li>
-                        <?= Html::a(
-                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'Permissions'),
-                          Yii::$app->urlManager->createUrl(['permission'])
-                        ) ?>
-                      </li>
-                      <li>
-                        <?= Html::a(
-                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'Roles'),
-                          Yii::$app->urlManager->createUrl(['role'])
-                        ) ?>
-                      </li>
-                      <li>
-                        <?= Html::a(
-                          '<i class="fa fa-caret-right"></i> '.Yii::t('backend', 'AdminLogs'),
-                          Yii::$app->urlManager->createUrl(['admin-log'])
-                        ) ?>
-                      </li>
-                    </ul>
-                  </li>
-                  <?php
-                  /*
-                  <li class="dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-desktop">
-                      </i>
-                      Example Pages
-                      <b class="fa fa-plus dropdown-plus">
-                      </b>
-                      <span class="label label-greensea">
-                        mails
-                      </span>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a href="mail.html">
-                          <i class="fa fa-caret-right">
-                          </i>
-                          Vertical Mail
-                          <span class="badge badge-red">
-                            5
-                          </span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="mail-horizontal.html">
-                          <i class="fa fa-caret-right">
-                          </i>
-                          Horizontal Mail
-                          <span class="label label-greensea">
-                            mails
-                          </span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  
-                  */
-                  ?>
-                </ul>
+                <?= Menu::menu(); ?>
               </li>
               <?php
               /*
@@ -782,5 +687,6 @@ AppAsset::register($this);
     </section>
     <?php $this->endBody() ?>
   </body>
+  <?php $this->registerJs($this->blocks['js_end'], \yii\web\View::POS_READY); ?>
 </html>
 <?php $this->endPage() ?>

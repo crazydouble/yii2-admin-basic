@@ -10,6 +10,7 @@ return [
     'Forgot Password' => '忘记密码',
     'Contact Admin' => '联系管理员',
 
+    'Dashboard' => '仪表盘',
     'Index' => '首页',
 
     'User Management' => '用户管理',
@@ -23,6 +24,10 @@ return [
     'Create Admin' => '创建管理员',
     'Update Admin' => '更新管理员',
     'View Admin' => '查看管理员',
+    'Menus' => '菜单列表',
+    'Create Menu' => '创建菜单',
+    'Update Menu' => '更新菜单',
+    'View Menu' => '查看菜单',
     'Permissions' => '权限列表',
     'Create Permission' => '创建权限',
     'Update Permission' => '更新权限',
