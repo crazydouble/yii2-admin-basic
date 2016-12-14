@@ -3,10 +3,7 @@
 namespace backend\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%admin}}".
@@ -24,21 +21,11 @@ use yii\helpers\ArrayHelper;
  */
 class Admin extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
     const AUTH_KEY = '134679';
 
     public static function tableName()
     {
         return '{{%admin}}';
-    }
-
-    public function behaviors()
-    {
-        return [
-            //自动填充指定的属性与当前时间戳
-            TimestampBehavior::className(),
-        ];
     }
     
     public function beforeSave($insert)
@@ -63,7 +50,7 @@ class Admin extends ActiveRecord implements IdentityInterface
         \backend\models\AdminLog::saveLog($this);
         return true; 
     }
-
+    
     public function rules()
     {
         return [
@@ -250,29 +237,5 @@ class Admin extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
-    }
-
-    /**
-     * @param bool $status
-     * @return array|mixed
-     */
-    public static function getValues($field, $value = false)
-    {
-        $values = [
-            'status' => [
-                self::STATUS_ACTIVE => Yii::t('common', 'Active'),
-                self::STATUS_DELETED => Yii::t('common', 'Deleted'),
-            ]
-        ];
-
-        return $value !== false ? ArrayHelper::getValue($values[$field], $value) : $values[$field];
-    }
-
-    public function updateStatus(){
-        $this->status = ($this->status == self::STATUS_ACTIVE) ? self::STATUS_DELETED : self::STATUS_ACTIVE;
-        if($this->save()){
-            return true;
-        }
-        return false;
     }
 }

@@ -3,8 +3,7 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+use backend\models\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -19,20 +18,9 @@ use yii\helpers\ArrayHelper;
  */
 class City extends ActiveRecord
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
-
     public static function tableName()
     {
         return '{{%city}}';
-    }
-
-    public function behaviors()
-    {
-        return [
-            //自动填充指定的属性与当前时间戳
-            TimestampBehavior::className(),
-        ];
     }
 
     public function rules()
@@ -62,17 +50,5 @@ class City extends ActiveRecord
     {
         $model = static::findAll(['pid' => $pid, 'status' => self::STATUS_ACTIVE]);
         return ArrayHelper::map($model, 'id', 'name');
-    }
-    
-    public static function getValues($field, $value = false)
-    {
-        $values = [
-            'status' => [
-                self::STATUS_ACTIVE => Yii::t('common', 'Active'),
-                self::STATUS_DELETED => Yii::t('common', 'Deleted'),
-            ]
-        ];
-
-        return $value !== false ? ArrayHelper::getValue($values[$field], $value) : $values[$field];
     }
 }

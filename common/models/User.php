@@ -3,8 +3,7 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+use backend\models\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
 use components\Oss;
@@ -42,9 +41,6 @@ class User extends ActiveRecord implements IdentityInterface
     const SOURCE_WEIXIN = 30;
     const SOURCE_WEIBO = 40;
 
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
-
     const AUTH_KEY = '134679';
 
     public $phone_verify_code;
@@ -55,14 +51,6 @@ class User extends ActiveRecord implements IdentityInterface
     public static function tableName()
     {
         return '{{%user}}';
-    }
-
-    public function behaviors()
-    {
-        return [
-            //自动填充指定的属性与当前时间戳
-            TimestampBehavior::className(),
-        ];
     }
 
     public function beforeSave($insert)
@@ -399,14 +387,6 @@ class User extends ActiveRecord implements IdentityInterface
         ];
 
         return $value !== false ? ArrayHelper::getValue($values[$field], $value) : $values[$field];
-    }
-
-    public function updateStatus(){
-        $this->status = ($this->status == self::STATUS_ACTIVE) ? self::STATUS_DELETED : self::STATUS_ACTIVE;
-        if($this->save()){
-            return true;
-        }
-        return false;
     }
     
     //手机验证码验证
