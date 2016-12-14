@@ -82,14 +82,12 @@ use kartik\select2\Select2;
             $(".icon").addClass('disabled');   
         }
     }
-
   <?php $this->beginBlock('js_end') ?> 
     display();
     icon = $("#menu-icon").val();
     if(icon){
         $('.' + icon).next().show();
     }
-    
     //选择图标
     $('.icon > h1').click(function(){
       $('h1').removeClass('active');
