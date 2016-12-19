@@ -5,10 +5,13 @@ return [
     'Update' => '更新',
     'Reset' => '重置',
     'Back' => '返回',
+    'Back Home' => '返回首页',
     'Login' => '登录',
     'Logout' => '退出',
     'Forgot Password' => '忘记密码',
     'Contact Admin' => '联系管理员',
+    'Error' => '哎呀…您访问的页面不存在',
+    'Permission Error' => '抱歉…当前您没有访问权限,请联系管理员',
 
     'Dashboard' => '仪表盘',
     'Index' => '首页',

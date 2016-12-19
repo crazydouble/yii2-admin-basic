@@ -53,6 +53,7 @@ class m161207_074328_menu extends Migration
     {
         $this->dropTable(self::TBL_NAME);
     }
+    
     private function getMenuSql()
     {
         return "INSERT INTO `menu` (`id`, `name`, `parent`, `route`, `icon`, `priority`, `created_at`, `updated_at`, `status`) VALUES
