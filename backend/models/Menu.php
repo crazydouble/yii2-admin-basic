@@ -86,29 +86,35 @@ class Menu extends ActiveRecord
 
     public static function menu()
     {
-        $model = static::menuList();
-        $menu = "<ul class='menu'>";
-        foreach ($model as $value) {
-            $menu .= "<li class='dropdown'>";
-            $menu .= Html::a(
-                "<i class='fa {$value->icon}'></i>{$value->name}<b class='fa fa-plus dropdown-plus'></b>",
-                'javascript:void(0);',
-                ['class' => 'dropdown-toggle', 'data-toggle' => 'dropdown']
-            );
-            
-            $child = static::menuList($value->id);
-            foreach ($child as $v) {
-                $menu .= "<ul class='dropdown-menu'><li>";
-                $menu .= Html::a(
-                  "<i class='fa fa-caret-right'></i>{$v->name}",
-                  Yii::$app->urlManager->createUrl([$v->route])
-                );
-                $menu .= "</li></ul>";
+        $menus = "<ul class='menu'>";
+        foreach (static::menuList() as $value) {
+            $menu = '';
+            $status = false;
+            //判断是否有子菜单权限
+            foreach (static::menuList($value->id) as $v) {
+                if(Yii::$app->user->can($v->route)){
+                    $status = true;
+                    $menu .= "<ul class='dropdown-menu'><li>";
+                    $menu .= Html::a(
+                      "<i class='fa fa-caret-right'></i>{$v->name}",
+                      Yii::$app->urlManager->createUrl([$v->route])
+                    );
+                    $menu .= "</li></ul>";
+                }
             }
-            $menu .= '</li>';
+            if($status == true){
+                $menus .= "<li class='dropdown'>";
+                $menus .= Html::a(
+                    "<i class='fa {$value->icon}'></i>{$value->name}<b class='fa fa-plus dropdown-plus'></b>",
+                    'javascript:void(0);',
+                    ['class' => 'dropdown-toggle', 'data-toggle' => 'dropdown']
+                );
+                $menus .= $menu;
+                $menus .= '</li>';
+            }
         }
-        $menu .= "</ul>";
-        return $menu;
+        $menus .= "</ul>";
+        return $menus;
     }
 
     public static function menuList($parent = 0)

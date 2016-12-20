@@ -47,6 +47,7 @@ use backend\models\Admin;
                 'model' => $model,
                 'attributes' => [
                     'id',
+                    'role',
                     'username',
                     'nickname',
                     'email:email',

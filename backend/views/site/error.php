@@ -12,6 +12,7 @@ Yii::$app->layout = 'error';
 
 		<h2><?= Yii::t('backend', 'Permission Error') ?></h2>
 		<div class="c2">
+			<a href="<?= $_SERVER['HTTP_REFERER'] ?>" class="re"><?= Yii::t('backend', 'Back') ?></a>
 			<a href="<?= Yii::$app->homeUrl ?>" class="home"><?= Yii::t('backend', 'Back Home') ?></a>
 		</div>
 	<?php else: ?>
@@ -21,9 +22,9 @@ Yii::$app->layout = 'error';
 
 		<h2><?= Yii::t('backend', 'Error') ?></h2>
 		<div class="c2">
+			<a href="<?= $_SERVER['HTTP_REFERER'] ?>" class="re"><?= Yii::t('backend', 'Back') ?></a>
 			<a href="<?= Yii::$app->homeUrl ?>" class="home"><?= Yii::t('backend', 'Back Home') ?></a>
 			<!--
-			<a href="<?= Yii::$app->homeUrl ?>" class="re">返回</a>
 			<a href="http://www.sj5d.com" class="home">返回首页</a>
 			<a href="http://www.moke8.com" class="sr">搜索一下页面相关信息</a>
 			-->

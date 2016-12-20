@@ -28,6 +28,13 @@ class Rbac extends ActiveRecord
         return '{{%auth_item}}';
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        \backend\models\AdminLog::saveLog($this);
+        return true; 
+    }
+
     public function rules()
     {
         return [
@@ -60,12 +67,9 @@ class Rbac extends ActiveRecord
         ];
     }
 
-    /**
-     * 获取权限列表
-     */
-    public static function getPermissionList()
+    public static function getRbacList($type = 1)
     {
-        $model = static::findAll(['type' => 2 , 'status' => self::STATUS_ACTIVE]);
+        $model = static::findAll(['type' => $type , 'status' => self::STATUS_ACTIVE]);
         return ArrayHelper::map($model, 'name', 'description');
     }
 }

@@ -22,6 +22,8 @@ use yii\web\IdentityInterface;
 class Admin extends ActiveRecord implements IdentityInterface
 {
     const AUTH_KEY = '134679';
+    
+    public $role;
 
     public static function tableName()
     {
@@ -47,6 +49,23 @@ class Admin extends ActiveRecord implements IdentityInterface
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
+        //关联角色
+        $auth = Yii::$app->authManager;
+        if($insert) {
+            $role = $auth->getRole($this->role);
+            $auth->assign($role, $this->id);
+        } else {
+            $orole = key($auth->getAssignments($this->id));
+
+            if($this->role != $orole){
+                $role = $auth->getRole($orole);
+                $auth->revoke($role, $this->id);
+                //更新角色
+                $role = $auth->getRole($this->role);
+                $auth->assign($role, $this->id);
+            }
+        } 
+
         \backend\models\AdminLog::saveLog($this);
         return true; 
     }
@@ -56,7 +75,7 @@ class Admin extends ActiveRecord implements IdentityInterface
         return [
             //特殊需求
             [['username', 'password_hash'],'required'],
-            [['nickname', 'email'], 'required','on' => ['create','update']],
+            [['role', 'nickname', 'email'], 'required','on' => ['create','update']],
             [['username', 'nickname', 'email', 'password_reset_token'], 'unique','on' => ['create','update']],
             //字段规范
             ['username', 'match', 'pattern' => '/^[A-Za-z0-9_-]+$/','message' => '账号只能输入数字、字母 下划线'], 
@@ -77,6 +96,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'role' => Yii::t('app', '角色'),
             'username' => Yii::t('app', '账号'),
             'nickname' => Yii::t('app', '昵称'),
             'email' => Yii::t('app', '邮箱'),

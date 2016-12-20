@@ -133,6 +133,9 @@ class m140506_102106_rbac_init extends \yii\db\Migration
                     END
             END;");
         }
+        //添加默认数据
+        $this->execute($this->getItem());
+        $this->execute($this->getItemChild());
     }
 
     /**
@@ -151,5 +154,78 @@ class m140506_102106_rbac_init extends \yii\db\Migration
         $this->dropTable($authManager->itemChildTable);
         $this->dropTable($authManager->itemTable);
         $this->dropTable($authManager->ruleTable);
+    }
+    private function getItem()
+    {
+        return "INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`, `status`) VALUES
+        ('administrator', 1, '超级管理员', NULL, NULL, 1481705512, 1481705512, 10),
+
+        ('site', 2, '首页', NULL, NULL, 1481772377, 1481772377, 10),
+
+        ('user', 2, '用户列表', NULL, NULL, 1481772386, 1481772386, 10),
+        ('user/create', 2, '创建用户', NULL, NULL, 1481772919, 1481772919, 10),
+        ('user/view', 2, '查看用户', NULL, NULL, 1481772933, 1481772933, 10),
+        ('user/update', 2, '更新用户', NULL, NULL, 1481772933, 1481772933, 10),
+        ('user/delete', 2, '删除用户', NULL, NULL, 1481792000, 1481792000, 10),
+
+        ('admin', 2, '管理员列表', NULL, NULL, 1481772399, 1481772399, 10),
+        ('admin/create', 2, '创建管理员', NULL, NULL, 1481772946, 1481772946, 10),
+        ('admin/view', 2, '查看管理员', NULL, NULL, 1481772933, 1481772933, 10),
+        ('admin/update', 2, '更新管理员', NULL, NULL, 1481792072, 1481792072, 10),
+        ('admin/delete', 2, '删除管理员', NULL, NULL, 1481792124, 1481792124, 10),
+
+        ('menu', 2, '菜单列表', NULL, NULL, 1481772410, 1481772410, 10),
+        ('menu/create', 2, '创建菜单', NULL, NULL, 1481772946, 1481772946, 10),
+        ('menu/view', 2, '查看菜单', NULL, NULL, 1481772933, 1481772933, 10),
+        ('menu/update', 2, '更新菜单', NULL, NULL, 1481792072, 1481792072, 10),
+        ('menu/delete', 2, '删除菜单', NULL, NULL, 1481792124, 1481792124, 10),
+        
+        ('permission', 2, '权限列表', NULL, NULL, 1481772444, 1481772444, 10),
+        ('permission/create', 2, '创建权限', NULL, NULL, 1481772946, 1481772946, 10),
+        ('permission/view', 2, '查看权限', NULL, NULL, 1481772933, 1481772933, 10),
+        ('permission/update', 2, '更新权限', NULL, NULL, 1481792072, 1481792072, 10),
+        ('permission/delete', 2, '删除权限', NULL, NULL, 1481792124, 1481792124, 10),
+
+        ('role', 2, '角色列表', NULL, NULL, 1481791792, 1481791792, 10),
+        ('role/create', 2, '创建角色', NULL, NULL, 1481772946, 1481772946, 10),
+        ('role/view', 2, '查看角色', NULL, NULL, 1481772933, 1481772933, 10),
+        ('role/update', 2, '更新角色', NULL, NULL, 1481792072, 1481792072, 10),
+        ('role/delete', 2, '删除角色', NULL, NULL, 1481792124, 1481792124, 10),
+
+        ('admin-log', 2, '操作日志', NULL, NULL, 1481791822, 1481791822, 10),
+        ('admin-log/view', 2, '查看日志', NULL, NULL, 1481792072, 1481792072, 10);";
+    }
+
+    private function getItemChild()
+    {
+        return "INSERT INTO `auth_item_child` (`parent`, `child`, `status`) VALUES
+        ('administrator', 'admin', 10),
+        ('administrator', 'admin-log', 10),
+        ('administrator', 'admin-log/view', 10),
+        ('administrator', 'admin/create', 10),
+        ('administrator', 'admin/delete', 10),
+        ('administrator', 'admin/update', 10),
+        ('administrator', 'admin/view', 10),
+        ('administrator', 'menu', 10),
+        ('administrator', 'menu/create', 10),
+        ('administrator', 'menu/delete', 10),
+        ('administrator', 'menu/update', 10),
+        ('administrator', 'menu/view', 10),
+        ('administrator', 'permission', 10),
+        ('administrator', 'permission/create', 10),
+        ('administrator', 'permission/delete', 10),
+        ('administrator', 'permission/update', 10),
+        ('administrator', 'permission/view', 10),
+        ('administrator', 'role', 10),
+        ('administrator', 'role/create', 10),
+        ('administrator', 'role/delete', 10),
+        ('administrator', 'role/update', 10),
+        ('administrator', 'role/view', 10),
+        ('administrator', 'site', 10),
+        ('administrator', 'user', 10),
+        ('administrator', 'user/create', 10),
+        ('administrator', 'user/delete', 10),
+        ('administrator', 'user/update', 10),
+        ('administrator', 'user/view', 10);";
     }
 }

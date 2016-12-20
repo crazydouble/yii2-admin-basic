@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use backend\models\Rbac;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Admin */
@@ -11,6 +13,16 @@ use yii\widgets\ActiveForm;
 <div class="admin-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'role')->widget(
+        Select2::classname(), 
+        [  
+            'data' => Rbac::getRbacList(),
+            'options' => [
+                'placeholder' => Yii::t('common', 'Prompt')
+            ]
+        ]);
+    ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 

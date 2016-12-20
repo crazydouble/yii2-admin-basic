@@ -32,6 +32,7 @@ class m160421_095304_create_admin extends Migration
     private function saveAdminData($_model)
     {
         $model = clone $_model;
+        $model->role = Console::prompt('请输入管理员角色', ['default' => 'administrator']);
         $model->username = Console::prompt('请输入管理员用户名', ['default' => 'admin']);
         $model->password_hash = Console::prompt('请输入密码', ['default' => '123456']);
         $model->nickname = Console::prompt('请输入昵称', ['default' => '超级管理员']);

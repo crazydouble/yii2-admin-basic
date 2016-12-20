@@ -5,7 +5,7 @@ return [
     'Update' => '更新',
     'Reset' => '重置',
     'Back' => '返回',
-    'Back Home' => '返回首页',
+    'Back Home' => '网站首页',
     'Login' => '登录',
     'Logout' => '退出',
     'Forgot Password' => '忘记密码',

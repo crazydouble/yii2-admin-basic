@@ -47,6 +47,14 @@ use common\models\Format;
                             ['class' => 'yii\grid\SerialColumn'],
 
                             'id',
+                            [
+                                'attribute' => 'role',
+                                'value' => function ($model) {
+                                    $auth = Yii::$app->authManager;
+                                    $role = $auth->getRolesByUser($model->id);
+                                    return $role[key($role)]->description;
+                                },
+                            ],
                             'username',
                             'nickname',
                             'email:email',

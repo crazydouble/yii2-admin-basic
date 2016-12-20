@@ -34,8 +34,12 @@ class AdminController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $auth = Yii::$app->authManager;
+        $role = $auth->getRolesByUser($id);
+        $model->role = $role[key($role)]->description;
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model
         ]);
     }
 
@@ -68,7 +72,8 @@ class AdminController extends Controller
         $model = $this->findModel($id);
         
         $model->setScenario('update');
-
+        $auth = Yii::$app->authManager;
+        $model->role = key($auth->getAssignments($model->id));
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
