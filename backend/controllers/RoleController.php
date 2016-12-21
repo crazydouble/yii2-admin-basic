@@ -58,6 +58,7 @@ class RoleController extends Controller
                 if(is_array($model->permission)){
                     $this->addPermission($auth, $role, $model->permission);
                 }
+                \backend\models\AdminLog::saveLog($model);
                 return $this->redirect(['view', 'id' => $model->name]);
             }
         } else {

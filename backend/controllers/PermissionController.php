@@ -55,7 +55,6 @@ class PermissionController extends Controller
             $permission->description = $model->description;
             
             if($auth->add($permission)){
-                $model->type = Rbac::TYPE_PERMISSION;
                 \backend\models\AdminLog::saveLog($model);
                 return $this->redirect(['view', 'id' => $model->name]);
             }

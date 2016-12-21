@@ -121,7 +121,7 @@ class Menu extends ActiveRecord
     {
         return static::find()
             ->where(['parent' => $parent, 'status' => self::STATUS_ACTIVE])
-            ->orderBy('priority')
+            ->orderBy('id, priority')
             ->all();
     }
 }

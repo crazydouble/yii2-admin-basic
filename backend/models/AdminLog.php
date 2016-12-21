@@ -70,10 +70,17 @@ class AdminLog extends ActiveRecord
 
             $log->controller = Yii::$app->controller->id;
             $log->action = Yii::$app->controller->action->id;
-
             foreach ($model->attributes as $key => $value) {
                 $log->details .= $key .' : '. $value . "\r\n";
             }
+            //针对RBAC处理
+            if(isset($model->permission)){
+                $log->details .= 'permission : '. implode('，', $model->permission);
+            }
+            if(isset($model->role)){
+                $log->details .= 'role : '. $model->role;
+            }
+
             $log->save(false);
         }
         return true;
