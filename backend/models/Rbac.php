@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use backend\models\Menu;
 
 /**
  * This is the model class for table "{{%auth_item}}".
@@ -67,9 +68,28 @@ class Rbac extends ActiveRecord
         ];
     }
 
-    public static function getRbacList($type = 1)
+    public static function getRoles()
     {
-        $model = static::findAll(['type' => $type , 'status' => self::STATUS_ACTIVE]);
+        $model = static::findAll(['type' => 1 , 'status' => self::STATUS_ACTIVE]);
         return ArrayHelper::map($model, 'name', 'description');
+    }
+
+    public static function getPermissions()
+    {
+        foreach (Menu::menuList() as $value) {
+            foreach (Menu::menuList($value->id) as $v) {
+                $model = static::findOne(['name' => $v->route, 'type' => 2, 'status' => self::STATUS_ACTIVE]);
+                $res[$value->name][$model->name] = $model->description;
+
+                $permissions = static::find()
+                    ->where(['type' => 2, 'status' => self::STATUS_ACTIVE])
+                    ->andFilterWhere(['like', 'name', $v->route . '/'])
+                    ->all();
+                foreach ($permissions as $permission) {
+                    $res[$value->name][$permission->name] = '—　' . $permission->description;
+                }
+            }
+        }
+        return $res;
     }
 }

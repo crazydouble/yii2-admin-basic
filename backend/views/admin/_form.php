@@ -17,7 +17,7 @@ use backend\models\Rbac;
     <?= $form->field($model, 'role')->widget(
         Select2::classname(), 
         [  
-            'data' => Rbac::getRbacList(),
+            'data' => Rbac::getRoles(),
             'options' => [
                 'placeholder' => Yii::t('common', 'Prompt')
             ]

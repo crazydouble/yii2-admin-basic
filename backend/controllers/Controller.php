@@ -51,6 +51,7 @@ class Controller extends \yii\web\Controller
         if(!Yii::$app->user->identity->id || $route == 'site/logout' || $route == 'site/error'){
             return;
         }
+
         if(!Yii::$app->user->can($action)){
             //首页没有权限
             if($action == 'site'){
@@ -62,7 +63,9 @@ class Controller extends \yii\web\Controller
             }
         }
 
-        if(strpos($route , "/") !== false){
+        $end = explode('/', $route);
+        $filter = ['create', 'view', 'update', 'delete'];
+        if(in_array(end($end), $filter)){
             if(!Yii::$app->user->can($route)){
                 $this->redirect(['site/error', 'type' => 'permission']);
                 Yii::$app->end();

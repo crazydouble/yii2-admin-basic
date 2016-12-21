@@ -24,7 +24,7 @@ class m140506_102106_rbac_init extends \yii\db\Migration
     {
         $authManager = Yii::$app->getAuthManager();
         if (!$authManager instanceof DbManager) {
-            throw new InvalidConfigException('You should configure "authManager" component to use database before executing this migration.');
+            throw new InvalidConfigException('你应该配置 authManager 使用数据库再执行迁移');
         }
         return $authManager;
     }
@@ -199,33 +199,39 @@ class m140506_102106_rbac_init extends \yii\db\Migration
     private function getItemChild()
     {
         return "INSERT INTO `auth_item_child` (`parent`, `child`, `status`) VALUES
-        ('administrator', 'admin', 10),
-        ('administrator', 'admin-log', 10),
-        ('administrator', 'admin-log/view', 10),
-        ('administrator', 'admin/create', 10),
-        ('administrator', 'admin/delete', 10),
-        ('administrator', 'admin/update', 10),
-        ('administrator', 'admin/view', 10),
-        ('administrator', 'menu', 10),
-        ('administrator', 'menu/create', 10),
-        ('administrator', 'menu/delete', 10),
-        ('administrator', 'menu/update', 10),
-        ('administrator', 'menu/view', 10),
-        ('administrator', 'permission', 10),
-        ('administrator', 'permission/create', 10),
-        ('administrator', 'permission/delete', 10),
-        ('administrator', 'permission/update', 10),
-        ('administrator', 'permission/view', 10),
-        ('administrator', 'role', 10),
-        ('administrator', 'role/create', 10),
-        ('administrator', 'role/delete', 10),
-        ('administrator', 'role/update', 10),
-        ('administrator', 'role/view', 10),
         ('administrator', 'site', 10),
+
         ('administrator', 'user', 10),
         ('administrator', 'user/create', 10),
-        ('administrator', 'user/delete', 10),
+        ('administrator', 'user/view', 10),
         ('administrator', 'user/update', 10),
-        ('administrator', 'user/view', 10);";
+        ('administrator', 'user/delete', 10),
+
+        ('administrator', 'admin', 10),
+        ('administrator', 'admin/create', 10),
+        ('administrator', 'admin/view', 10),
+        ('administrator', 'admin/update', 10),
+        ('administrator', 'admin/delete', 10),
+
+        ('administrator', 'menu', 10),
+        ('administrator', 'menu/create', 10),
+        ('administrator', 'menu/view', 10),
+        ('administrator', 'menu/update', 10),
+        ('administrator', 'menu/delete', 10),
+
+        ('administrator', 'permission', 10),
+        ('administrator', 'permission/create', 10),
+        ('administrator', 'permission/view', 10),
+        ('administrator', 'permission/update', 10),
+        ('administrator', 'permission/delete', 10),
+
+        ('administrator', 'role', 10),
+        ('administrator', 'role/create', 10),
+        ('administrator', 'role/view', 10),
+        ('administrator', 'role/update', 10),
+        ('administrator', 'role/delete', 10),
+
+        ('administrator', 'admin-log', 10),
+        ('administrator', 'admin-log/view', 10);";
     }
 }

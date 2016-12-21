@@ -19,11 +19,14 @@ use kartik\select2\Select2;
     <?= $form->field($model, 'permission')->widget(
         Select2::classname(), 
         [
-            'data' => Rbac::getRbacList(2),
+            'data' => Rbac::getPermissions(),
             'options' => [
                 'multiple' => true,
-                'placeholder' => Yii::t('common', 'Prompt')
-            ]
+                'placeholder' => Yii::t('common', 'Prompt'),
+            ],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
         ]);
     ?>
 
