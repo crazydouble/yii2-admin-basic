@@ -1058,7 +1058,7 @@ body .navbar .navbar-nav.side-nav.collapsed > li.navigation > ul > li > a {
   width: 40px;
   white-space: nowrap;
   overflow: hidden;
-  padding: 0 12px;
+  padding: 0 15px;
   -webkit-transition: none;
   -moz-transition: none;
   transition: none;
