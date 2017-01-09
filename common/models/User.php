@@ -8,6 +8,7 @@ use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
 use components\Oss;
 use common\models\City;
+use components\Alidayu;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -104,7 +105,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['phone_number', 'password_hash'],'required','on' => ['create','alidayu','update']],
             //手机验证码
             ['phone_verify_code','required','on' => ['alidayu']],
-            ['phone_verify_code','getPhoneCodeRecord','on' => ['alidayu']],
+            ['phone_verify_code','phoneVerifyCode','on' => ['alidayu']],
             //第三方注册
             ['open_id','required','on' => ['oauth']],
             //绑定邮箱
@@ -390,45 +391,32 @@ class User extends ActiveRecord implements IdentityInterface
     }
     
     //手机验证码验证
-    public function getPhoneCodeRecord($attribute)
+    public function phoneVerifyCode($attribute)
     {
         if($this->phone_number && $this->phone_verify_code) {
-            $c = new \TopClient;
-            $c->appkey = Yii::$app->params['alidayu']['appkey'];
-            $c->secretKey = Yii::$app->params['alidayu']['secretKey'];
-            $req = new \AlibabaAliqinFcSmsNumQueryRequest;
-            //$req->setBizId("1234^1234");
-            $req->setRecNum($this->phone_number);
-            $req->setQueryDate(date('Ymd'));
-            $req->setCurrentPage('1');
-            $req->setPageSize('50');
-            $resp = $c->execute($req);
-            $obj = $resp->values;
-            if($obj){
-                foreach ($obj->fc_partner_sms_detail_dto as $value) {
-                    if($value->extend == $this->phone_verify_code && $value->sms_status == 3){
-                        $second = floor(strtotime(date('Y-m-d H:i:s')) - strtotime($value->sms_receiver_time));
-                        if($second <= 300){
-                            return;
-                        }
-                    }
-                }
+            $alidayu = new Alidayu();
+            $res = $alidayu->phoneVerifyCode($this);
+            if($res == false){
+                $this->addError('phone_verify_code', '无效的验证码');
             }
-            $this->addError('phone_verify_code', '无效的验证码');
         }
     }
+
     public function getProvinces()
     {
         return $this->hasOne(City::className(), ['id' => 'province'])->alias('provinces');
     }
+
     public function getCitys()
     {
         return $this->hasOne(City::className(), ['id' => 'city'])->alias('citys');
     }
+
     static public function getNickname(){
         $nickname = Yii::$app->user->identity->nickname;
         return (preg_match("/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/", $nickname)) ? substr_replace($nickname,'****',3,4) : $nickname;       
     }
+
     static public function getAvatar(){
         return (Yii::$app->user->identity->avatar) ? Oss::getUrl('user', 'avatar', Yii::$app->user->identity->avatar)."@1e_1c_0o_0l_256h_256w_90q.src" : Yii::$app->request->baseUrl . '/assets/images/avatar.png';
     }

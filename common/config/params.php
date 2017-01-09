@@ -18,6 +18,7 @@ return [
     'alidayu' => [
         'appkey' => '', // 填写你的appkey
         'secretKey' => '', // 填写你的secretKey
+        'name' => '默认', // 填写你的项目名称
         /*
          * 根据需求添加／更改需要的短信类型
          */
