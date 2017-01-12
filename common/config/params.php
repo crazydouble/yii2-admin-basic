@@ -18,17 +18,7 @@ return [
     'alidayu' => [
         'appkey' => '', // 填写你的appkey
         'secretKey' => '', // 填写你的secretKey
-        'name' => '默认', // 填写你的项目名称
-        /*
-         * 根据需求添加／更改需要的短信类型
-         */
-        'signup' => [
-            'smsFreeSignName' => '注册验证',  
-            'smsTemplateCode' => 'SMS_6765804', 
-        ],
-        'update' => [
-            'smsFreeSignName' => '变更验证', 
-            'smsTemplateCode' => 'SMS_6765801', 
-        ]
+        'smsFreeSignName' => '默认', //填写显示名称
+        'smsTemplateCode' => 'SMS_XXXXX', //填写模版Code
     ],
 ];

@@ -6,7 +6,7 @@ use Yii;
 
 class Alidayu {
 
-	private $topClient;
+    private $topClient;
 
     public function __construct()
     {
@@ -15,17 +15,16 @@ class Alidayu {
         $this->topClient->secretKey = Yii::$app->params['alidayu']['secretKey'];
     }
 
-    public function sendPhoneVerifyCode($phone_number, $type = 'signup')
+    public function sendPhoneVerifyCode($phone_number)
     {
         $req = new \AlibabaAliqinFcSmsNumSendRequest;
         $code = $this->verify_code();
-        $name = Yii::$app->params['alidayu']['name'];
         $req->setExtend($code);
         $req->setSmsType("normal");
-        $req->setSmsFreeSignName(Yii::$app->params['alidayu'][$type]['smsFreeSignName']);
-        $req->setSmsParam("{\"code\":\"$code\",\"product\":\"$name\"}");
+        $req->setSmsFreeSignName(Yii::$app->params['alidayu']['smsFreeSignName']);
+        $req->setSmsParam("{\"code\":\"$code\"}");
         $req->setRecNum($phone_number);
-        $req->setSmsTemplateCode(Yii::$app->params['alidayu'][$type]['smsTemplateCode']);
+        $req->setSmsTemplateCode(Yii::$app->params['alidayu']['smsTemplateCode']);
         $resp = $this->topClient->execute($req);
         return (isset($resp->result->success) && $resp->result->success == true) ? $code : false;
     }
@@ -52,9 +51,8 @@ class Alidayu {
         return false;
     }
  
-    public function verify_code($length = 4) 
+    public function verify_code($length = 6) 
     {  
         return str_pad(mt_rand(0, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT);  
     }
-
 }
